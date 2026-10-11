@@ -1,0 +1,1175 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PDD Question Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a test-runner-style revision tool. Header + pytest-like result strip, filter bar, single column of question cards; case study = PRD panel beside its questions. */
+:root {
+  --bg: #F2F4F7;
+  --surface: #FFFFFF;
+  --surface-2: #F7F9FB;
+  --ink: #16202E;
+  --muted: #5A6476;
+  --line: #D8DEE7;
+  --accent: #0D6C77;
+  --accent-soft: #DCEFF0;
+  --pass: #1C7A44;
+  --pass-soft: #E0F2E7;
+  --fail: #B1271E;
+  --fail-soft: #FBE3E0;
+  --warn: #7A5200;
+  --warn-soft: #FFF2D3;
+  --code-bg: #EEF2F6;
+  --tk-kw: #7B2FB0;
+  --tk-str: #1C7A44;
+  --tk-com: #6B7383;
+  --tk-num: #B4561B;
+  --area-a: #7246B8; --area-a-soft: #EFE8FA;
+  --area-b: #0D6C77; --area-b-soft: #DCEFF0;
+  --area-c: #2459B8; --area-c-soft: #E3ECFA;
+  --area-d: #A6501A; --area-d-soft: #FBEADF;
+  --shadow: 0 1px 2px rgba(22,32,46,.06), 0 4px 14px rgba(22,32,46,.05);
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E131A; --surface: #151C26; --surface-2: #1A2330; --ink: #E5E9EF; --muted: #98A2B3; --line: #283244;
+    --accent: #4CBFCA; --accent-soft: #12343A; --pass: #4CC27E; --pass-soft: #12301F; --fail: #F2776E; --fail-soft: #3A1916;
+    --warn: #E8B848; --warn-soft: #30260E; --code-bg: #0B1016; --tk-kw: #C99BF2; --tk-str: #7FD69F; --tk-com: #7D8797; --tk-num: #F0A46B;
+    --area-a: #B89BEE; --area-a-soft: #2A2140; --area-b: #4CBFCA; --area-b-soft: #12343A; --area-c: #86AEF2; --area-c-soft: #1B2944; --area-d: #F0A46B; --area-d-soft: #3A2414;
+    --shadow: 0 1px 2px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E131A; --surface: #151C26; --surface-2: #1A2330; --ink: #E5E9EF; --muted: #98A2B3; --line: #283244;
+  --accent: #4CBFCA; --accent-soft: #12343A; --pass: #4CC27E; --pass-soft: #12301F; --fail: #F2776E; --fail-soft: #3A1916;
+  --warn: #E8B848; --warn-soft: #30260E; --code-bg: #0B1016; --tk-kw: #C99BF2; --tk-str: #7FD69F; --tk-com: #7D8797; --tk-num: #F0A46B;
+  --area-a: #B89BEE; --area-a-soft: #2A2140; --area-b: #4CBFCA; --area-b-soft: #12343A; --area-c: #86AEF2; --area-c-soft: #1B2944; --area-d: #F0A46B; --area-d-soft: #3A2414;
+  --shadow: 0 1px 2px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 20px; }
+@media (max-width: 520px) { .wrap { padding-inline: 16px; } }
+
+/* Header */
+.top { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.05; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0; max-width: 65ch; }
+
+.caution { display: flex; gap: 12px; align-items: flex-start; background: var(--warn-soft); color: var(--ink); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); border-radius: 10px; padding: 12px 14px; }
+.caution svg { flex: none; color: var(--warn); margin-top: 2px; }
+.caution p { margin: 0; font-size: 14.5px; }
+.caution strong { color: var(--warn); }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { appearance: none; border: 0; background: none; font: 600 15px/1 var(--f-body); color: var(--muted); padding: 12px 14px; border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; white-space: nowrap; display: inline-flex; gap: 8px; align-items: center; }
+.tab .n { font-family: var(--f-mono); font-size: 12px; font-weight: 400; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 2px 7px; color: var(--muted); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+/* Run strip */
+.run { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; }
+.run-row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.run-summary { font-family: var(--f-mono); font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.run-summary b { font-weight: 600; }
+.run-summary .p { color: var(--pass); } .run-summary .f { color: var(--fail); }
+.dots { display: flex; flex-wrap: wrap; gap: 4px; }
+.dot { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); background: var(--surface-2); padding: 0; cursor: pointer; }
+.dot[data-s="pass"] { background: var(--pass); border-color: var(--pass); }
+.dot[data-s="fail"] { background: var(--fail); border-color: var(--fail); }
+.dot.dim { opacity: .25; }
+.dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn-ghost { appearance: none; background: none; border: 1px solid var(--line); color: var(--muted); font: 600 13px/1 var(--f-body); padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.btn-ghost:hover { color: var(--ink); border-color: var(--muted); }
+.btn-ghost.armed { color: var(--fail); border-color: var(--fail); }
+.btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Filters */
+.filters { display: grid; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.frow { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.flabel { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); min-width: 78px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { appearance: none; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); font: 400 14px/1 var(--f-body); padding: 7px 11px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.chip .sw { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--muted)); }
+.chip[aria-pressed="true"] { background: var(--cs, var(--accent-soft)); border-color: var(--c, var(--accent)); font-weight: 700; }
+.chip:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { font: 14px var(--f-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; max-width: 100%; min-width: 0; }
+.showing { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.clear { appearance: none; background: none; border: 0; color: var(--accent); font: 600 13.5px var(--f-body); cursor: pointer; padding: 4px; }
+
+/* Cards */
+.list { display: grid; gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 20px; display: grid; gap: 14px; box-shadow: var(--shadow); min-width: 0; scroll-margin-top: 16px; }
+.card[data-s="pass"] { border-color: color-mix(in srgb, var(--pass) 45%, var(--line)); }
+.card[data-s="fail"] { border-color: color-mix(in srgb, var(--fail) 45%, var(--line)); }
+.card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.qnum { font-family: var(--f-display); font-weight: 800; font-size: 20px; letter-spacing: -.01em; }
+.tpill { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); }
+.tpill[data-t="H"] { color: var(--accent); border-color: var(--accent); }
+.status { margin-left: auto; font-family: var(--f-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; }
+.status[data-s="pass"] { color: var(--pass); } .status[data-s="fail"] { color: var(--fail); }
+
+.info { position: relative; }
+.info-btn { appearance: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); font: 700 14px/1 var(--f-display); cursor: pointer; display: grid; place-items: center; }
+.info-btn:hover, .info.open .info-btn { color: var(--accent); border-color: var(--accent); }
+.info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pop { display: none; position: absolute; z-index: 20; top: calc(100% + 8px); left: -8px; width: min(340px, calc(100vw - 48px)); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px rgba(10,16,26,.18); padding: 14px; gap: 12px; }
+.info:hover .pop, .info.open .pop, .info:focus-within .pop { display: grid; }
+.pop h4 { margin: 0 0 6px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.ctags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ctag { font-size: 13px; padding: 4px 8px; border-radius: 6px; background: var(--cs); color: var(--ink); border-left: 3px solid var(--c); }
+.ctag code { font-family: var(--f-mono); font-size: 11.5px; color: var(--c); margin-right: 4px; font-weight: 600; }
+.pop p { margin: 0; font-size: 14px; }
+
+.prompt { display: grid; gap: 10px; min-width: 0; }
+.prompt p { margin: 0; max-width: 72ch; }
+code.i { font-family: var(--f-mono); font-size: .9em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { margin: 0; background: var(--code-bg); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-family: var(--f-mono); font-size: 13.5px; line-height: 1.6; tab-size: 4; }
+pre .kw { color: var(--tk-kw); font-weight: 600; } pre .st { color: var(--tk-str); } pre .cm { color: var(--tk-com); font-style: italic; } pre .nu { color: var(--tk-num); }
+
+.opts { display: grid; gap: 8px; }
+.opt { appearance: none; text-align: left; width: 100%; display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: inherit; color: inherit; cursor: pointer; min-width: 0; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.opt .letter { font-family: var(--f-mono); font-size: 13px; font-weight: 600; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: var(--muted); background: var(--surface); }
+.opt .body { min-width: 0; display: grid; gap: 6px; padding-top: 2px; }
+.opt .body pre { font-size: 13px; padding: 8px 10px; }
+.opt .mark { font-family: var(--f-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .05em; padding-top: 5px; }
+.opt:disabled { cursor: default; }
+.opt.correct { background: var(--pass-soft); border-color: var(--pass); }
+.opt.correct .letter { background: var(--pass); border-color: var(--pass); color: #fff; }
+.opt.correct .mark { color: var(--pass); }
+.opt.wrong { background: var(--fail-soft); border-color: var(--fail); }
+.opt.wrong .letter { background: var(--fail); border-color: var(--fail); color: #fff; }
+.opt.wrong .mark { color: var(--fail); }
+.opt.faded { opacity: .6; }
+
+.result { display: grid; gap: 10px; border-top: 1px dashed var(--line); padding-top: 12px; }
+.verdict { font-family: var(--f-display); font-weight: 600; font-size: 17px; margin: 0; }
+.verdict[data-s="pass"] { color: var(--pass); } .verdict[data-s="fail"] { color: var(--fail); }
+.expl { margin: 0; max-width: 72ch; }
+.result-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.ai-note { font-family: var(--f-mono); font-size: 11.5px; color: var(--warn); background: var(--warn-soft); padding: 3px 8px; border-radius: 6px; letter-spacing: .03em; }
+
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 28px; text-align: center; color: var(--muted); }
+
+/* Case study */
+.cs { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .cs { grid-template-columns: minmax(0,1fr); } }
+.prd { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow: auto; min-width: 0; }
+@media (max-width: 900px) { .prd { position: static; max-height: none; } }
+.prd summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; justify-content: space-between; gap: 10px; align-items: center; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface); z-index: 2; }
+.prd summary::-webkit-details-marker { display: none; }
+.prd summary .t { font-family: var(--f-display); font-weight: 800; font-size: 18px; }
+.prd summary .k { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+.prd[open] summary .k::after { content: " · hide"; } .prd:not([open]) summary .k::after { content: " · show"; }
+.prd-body { padding: 16px 18px 20px; display: grid; gap: 14px; font-size: 15px; }
+.prd-body h3 { font-family: var(--f-display); font-weight: 600; font-size: 16.5px; margin: 6px 0 0; }
+.prd-body h4 { font-size: 15px; margin: 4px 0 0; }
+.prd-body p, .prd-body ul { margin: 0; }
+.prd-body ul { padding-left: 20px; display: grid; gap: 4px; }
+.prd-body pre { font-size: 12.5px; }
+.ec { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ec th, .ec td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid var(--line); }
+.ec th { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.ec td:first-child { font-family: var(--f-mono); font-weight: 600; white-space: nowrap; }
+.tablewrap { overflow-x: auto; }
+.cs-q { display: grid; gap: 14px; min-width: 0; }
+.cs-note { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+.caution a { color: var(--accent); font-weight: 700; }
+.see-more { appearance: none; background: none; border: 0; padding: 0; font: 700 15px var(--f-body); color: var(--accent); cursor: pointer; white-space: nowrap; }
+.see-more:hover { text-decoration: underline; }
+.see-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.info-btn.flag { border-color: var(--warn); color: var(--warn); }
+.csnote { background: var(--warn-soft); border-radius: 8px; padding: 10px 12px; }
+.csnote h4 { color: var(--warn); }
+.cs-badge { display: inline-block; font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 2px 7px; border-radius: 5px; white-space: nowrap; }
+.g-intro { display: grid; gap: 6px; }
+.g-intro h2 { font-family: var(--f-display); font-weight: 800; font-size: 26px; margin: 0; }
+.g-intro p, .g-sub { margin: 0; color: var(--muted); max-width: 65ch; }
+.i-inline { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line); font: 700 12px var(--f-display); vertical-align: 1px; }
+.g-block { display: grid; gap: 12px; }
+.g-block h3 { font-family: var(--f-display); font-weight: 600; font-size: 19px; margin: 0; }
+.types { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.tcard { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.tcard .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tcard p { margin: 0; font-size: 15px; }
+.tcard .eg { color: var(--muted); font-size: 14px; }
+.cnt { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.areas { display: grid; gap: 14px; }
+.acard { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 12px; overflow: hidden; }
+.acard h4 { margin: 0; padding: 14px 16px 10px; font-family: var(--f-display); font-weight: 600; font-size: 17px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.crow { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; gap: 12px; align-items: start; padding: 12px 16px; border-top: 1px solid var(--line); }
+.crow code { font-family: var(--f-mono); font-weight: 600; font-size: 13px; color: var(--c); background: var(--cs); border-radius: 5px; padding: 2px 6px; justify-self: start; }
+.crow .nm { font-weight: 700; }
+.crow .ds { color: var(--muted); font-size: 14.5px; margin: 2px 0 0; }
+.crow .go { appearance: none; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font: 600 13px var(--f-body); color: var(--accent); cursor: pointer; white-space: nowrap; }
+.crow .go:hover { border-color: var(--accent); }
+.crow .go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 520px) { .crow { grid-template-columns: minmax(0,1fr); gap: 6px; } }
+@media (prefers-reduced-motion: no-preference) { .card { transition: border-color .2s; } .opt { transition: border-color .15s, background .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Program Design &amp; Development</span>
+    <h1>Question Bank</h1>
+    <p class="lede">Use this question bank to revisit every quiz question from the course so far. Use the filters to focus on one concept area or question type. <button class="see-more" type="button" data-goto="guide">See all concept areas &amp; question types →</button></p>
+  </header>
+
+  <aside class="caution" role="note">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5M12 18v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <p><strong>Explanations are AI-generated.</strong> They can contain mistakes. Double-check them against the <a href="https://docs.google.com/document/d/1Xaw5bB6X5VojtbCHXQif2Hui0oJWodMwyXxO4TAvXEU/edit?usp=sharing" target="_blank" rel="noopener"><i>Essential Concepts</i></a>, and ask your instructor if something doesn't add up.</p>
+  </aside>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-practice" data-tab="practice" aria-controls="panel-practice" aria-selected="true">Practice Questions <span class="n" id="n-practice"></span></button>
+    <button class="tab" role="tab" id="tab-case" data-tab="case" aria-controls="panel-case" aria-selected="false">Case Study: Online Food Ordering <span class="n" id="n-case"></span></button>
+    <button class="tab" role="tab" id="tab-guide" data-tab="guide" aria-controls="panel-guide" aria-selected="false">Concepts &amp; Question Types</button>
+  </nav>
+
+  <section id="panel-practice" role="tabpanel" aria-labelledby="tab-practice" style="display:grid;gap:16px">
+    <div class="run" id="run-practice"></div>
+    <div class="filters">
+      <div class="frow"><span class="flabel">Area</span><div class="chips" id="f-area"></div></div>
+      <div class="frow"><span class="flabel">Concept</span><select id="f-concept" aria-label="Concept"></select></div>
+      <div class="frow"><span class="flabel">Type</span><div class="chips" id="f-type"></div></div>
+      <div class="frow"><span class="flabel">Show</span><div class="chips" id="f-status"></div></div>
+      <div class="frow" style="justify-content:space-between"><span class="showing" id="showing"></span><button class="clear" id="f-clear" type="button">Clear filters</button></div>
+    </div>
+    <div class="list" id="list-practice"></div>
+  </section>
+
+  <section id="panel-case" role="tabpanel" aria-labelledby="tab-case" hidden style="gap:16px">
+    <div class="run" id="run-case"></div>
+    <div class="cs">
+      <details class="prd" open>
+        <summary><span class="t">The Corner Kitchen PRD</span><span class="k">Read first</span></summary>
+        <div class="prd-body">
+          <h3>1. Problem Statement &amp; Description</h3>
+          <p>The Corner Kitchen, a restaurant with a fixed menu, needs a simple command-line application that lets a customer see the menu, add items to a cart, delete items, and place the order. Each menu item has an item ID, a name and a price, and the amount to be paid is the total value of the items in the cart based on each item's price and quantity.</p>
+          <h3>2. Interface</h3>
+          <p>The application is a command-line program. Every time it waits for a choice, it first shows the menu and the cart, followed by the list of actions.</p>
+<pre>==================================================
+ THE CORNER KITCHEN -- MENU
+==================================================
+ 101  Classic Burger        Rs 180
+ 102  Paneer Wrap           Rs 160
+ 103  French Fries          Rs 120
+ 104  Cold Coffee           Rs  90
+ 105  Chocolate Brownie     Rs 150
+==================================================
+YOUR CART
+--------------------------------------------------
+ (empty)
+--------------------------------------------------
+Amount to pay: Rs 0
+
+1. Add item
+2. Delete item
+3. Place order
+4. Exit
+Enter your choice:</pre>
+          <p>Once items are added, the cart shows them:</p>
+<pre>YOUR CART
+--------------------------------------------------
+ Classic Burger      x2   Rs 360
+ Chocolate Brownie   x1   Rs 150
+--------------------------------------------------
+Amount to pay: Rs 510</pre>
+          <h3>3. Functional Requirements</h3>
+          <h4>FR 1: Show the menu and the cart, then the list of actions</h4>
+          <ul>
+            <li>The menu and the current cart are shown every time before the customer chooses an action.</li>
+            <li>The cart lists each item by name, with its quantity and amount, in the order the items were added.</li>
+            <li>The total amount to pay is shown below the cart.</li>
+            <li>An empty cart is shown as empty, with an amount to pay of Rs 0.</li>
+          </ul>
+          <h4>FR 2: Add an item to the cart</h4>
+          <ul>
+            <li>The customer gives the item ID and the quantity required.</li>
+            <li>If the item is not already in the cart, it is added with that quantity.</li>
+            <li>If the item is already in the cart, the new quantity is added to the quantity already there.</li>
+            <li>Every change is acknowledged with a message showing the running total for that item.</li>
+          </ul>
+<pre>Enter item ID: 101
+Enter quantity: 2
+Classic Burger added to your cart.
+
+Enter item ID: 101
+Enter quantity: 3
+Classic Burger quantity is now 5.</pre>
+          <h4>FR 3: Delete an item from the cart</h4>
+          <ul>
+            <li>The customer gives the item ID of an item in the cart, and it is deleted.</li>
+            <li>Deleting an item removes it entirely — all of its quantity at once, not one at a time.</li>
+            <li>Deleting an item updates the amount to pay.</li>
+          </ul>
+<pre>Enter item ID: 104
+Cold Coffee deleted from your cart.</pre>
+          <h4>FR 4: Place the order</h4>
+          <ul>
+            <li>An order can be placed only if the cart has at least one item.</li>
+            <li>On placing, the application shows the final cart and the amount to pay, confirms the order, and then ends.</li>
+          </ul>
+<pre>Order placed successfully.
+ Classic Burger    x2   Rs 360
+ French Fries      x1   Rs 120
+Amount to pay: Rs 480</pre>
+          <h3>4. Edge Cases</h3>
+          <p>In each case the application prints the stated message and lets the customer continue ordering.</p>
+          <div class="tablewrap">
+            <table class="ec">
+              <thead><tr><th>#</th><th>Situation</th><th>Expected behaviour</th></tr></thead>
+              <tbody>
+                <tr><td>EC 1</td><td>The item ID is not a number (e.g. abc)</td><td>Print <code class="i">Invalid item ID.</code>; the cart is unchanged.</td></tr>
+                <tr><td>EC 2</td><td>The item ID does not exist on the menu (e.g. 199)</td><td>Print <code class="i">No such item on the menu.</code>; the cart is unchanged.</td></tr>
+                <tr><td>EC 3</td><td>The quantity is not a whole number, or is negative (e.g. -2, two)</td><td>Print <code class="i">Invalid quantity.</code>; the cart is unchanged.</td></tr>
+                <tr><td>EC 4</td><td>The customer tries to delete an item that is not in the cart</td><td>Print <code class="i">That item is not in your cart.</code>; the cart is unchanged.</td></tr>
+                <tr><td>EC 5</td><td>The customer tries to place an order with an empty cart</td><td>Print <code class="i">Your cart is empty.</code>; the order is not placed and the customer may continue.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+      <div class="cs-q">
+        <p class="cs-note">All questions below are about the PRD on the left. Refer back to it as you answer.</p>
+        <div class="list" id="list-case"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-guide" role="tabpanel" aria-labelledby="tab-guide" hidden style="gap:24px">
+    <div class="g-intro">
+      <h2>How questions are tagged</h2>
+      <p>Every question is tagged with the concepts it tests and one question type. Tap the <span class="i-inline">i</span> button on any question to see its tags. Pick a concept below to practise just those questions.</p>
+    </div>
+    <div class="g-block">
+      <h3>Question types</h3>
+      <div class="types" id="g-types"></div>
+    </div>
+    <div class="g-block">
+      <h3>Concept areas</h3>
+      <p class="g-sub">Concepts marked <span class="cs-badge">Course-specific</span> follow this course's own templates and may be organised differently elsewhere.</p>
+      <div class="areas" id="g-areas"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const AREAS = {
+  A: { name: "Requirements & PRDs", c: "--area-a", cs: "--area-a-soft" },
+  B: { name: "Program Design", c: "--area-b", cs: "--area-b-soft" },
+  C: { name: "Test Design", c: "--area-c", cs: "--area-c-soft" },
+  D: { name: "Code Reading & Debugging", c: "--area-d", cs: "--area-d-soft" }
+};
+const CONCEPTS = {
+  A1: "What a PRD is", A2: "Why vague instructions aren't enough", A3: "PRD sections", A4: "Functional requirements vs edge cases",
+  A5: "PRD vs design document", A6: "Applying a PRD to a scenario",
+  B1: "Type-hinted signatures", B2: "Choosing a data representation", B3: "Stateful vs stateless programs", B4: "Pure functions & side effects",
+  B5: "Functional core, imperative shell", B6: "Designing for testability", B7: "Docstrings as specification", B8: "Procedural vs functional programming",
+  C1: "Why every requirement needs a test", C2: "Arrange–Act–Assert & starting state", C3: "Expected outputs from the spec", C4: "Testing edge cases",
+  C5: "Inputs for a specific edge case", C6: "Choosing a discriminating test", C7: "Action sequences & state transitions", C8: "Equivalence partitioning",
+  C9: "Boundary-value analysis", C10: "Black-box testing", C11: "Assertions on return values", C12: "Unit, integration & system tests",
+  C13: "Functional vs non-functional testing", C14: "Code coverage vs test coverage", C15: "Testing state-changing functions", C16: "Why tests are automated",
+  D1: "Tracing conditionals", D2: "Off-by-one boundary bugs", D3: "and vs or bugs", D4: "Runtime errors on edge inputs",
+  D5: "Type mismatch bugs", D6: "Missing state updates", D7: "Logical bug vs error", D8: "Does the test pass or fail?",
+  D9: "Return values that break the signature", D10: "Inverted conditions", D11: "Misplaced statements"
+};
+const TYPES = { T: "Theory", A: "Application", H: "Higher-Order" };
+const TYPE_INFO = {
+  T: { d: "Recall a definition, purpose or principle.", eg: "e.g. What is the main idea behind functional core, imperative shell?" },
+  A: { d: "Apply a known rule or technique to a given example: work out what code returns, which values a named technique picks, or what a PRD rule produces.", eg: "e.g. Using boundary-value analysis, which values best test this limit?" },
+  H: { d: "Design or choose a test without a named technique to lean on, or find the bug in given code.", eg: "e.g. Which assertion is most likely to expose the bug?" }
+};
+const COURSE_SPECIFIC = {
+  A3: "The PRD sections used here follow this course's own template. Real-world PRDs vary and often use different sections.",
+  A4: "Treating edge cases as their own category of requirement follows this course's PRD template. Elsewhere, requirements are often split into functional and non-functional instead."
+};
+const DESC = {
+  A1: "The Product Requirements Document: the written specification of what a program must do.",
+  A2: "Why an informal instruction like \"split a bill among friends\" can't define what a correct program is.",
+  A3: "The sections of the course's PRD template and what goes in each.",
+  A4: "Telling a behaviour on valid input (functional requirement) from an unusual or invalid input (edge case).",
+  A5: "The PRD says what a program must do; the design document says how it will be built.",
+  A6: "Reading a specific PRD and working out what the program should do in a given situation.",
+  B1: "The first line of a function, declaring parameter and return types. A contract the code must keep.",
+  B2: "Choosing how to store data, such as a dictionary vs a list of pairs.",
+  B3: "Whether a program's output depends only on the current input, or also on past actions.",
+  B4: "Functions whose result depends only on their parameters and that change nothing outside themselves.",
+  B5: "Keeping pure logic in a testable core, and input, output and state changes in a thin outer shell.",
+  B6: "Writing functions that take inputs as parameters and return results, so they can be unit tested.",
+  B7: "Reading a function's docstring as its specification.",
+  B8: "Procedural code lists the steps for how to get a result; functional code is built from pure functions and describes what is computed.",
+  C1: "Why each requirement needs at least one test, and why tests are written before the code.",
+  C2: "Structuring a test as Arrange, Act, Assert, including setting up the starting state.",
+  C3: "Expected outputs must come from the requirements, not from what the code happens to do.",
+  C4: "Testing unusual, boundary and invalid inputs, not just normal ones.",
+  C5: "Picking an input that triggers one specific edge case.",
+  C6: "Choosing the test that isolates a rule or exposes a particular bug.",
+  C7: "Testing ordered sequences of actions in a stateful program, including actions that should be refused.",
+  C8: "Splitting inputs into classes handled the same way, and testing one value from each.",
+  C9: "Testing at and just around the edges of a valid range, where faults cluster.",
+  C10: "Designing tests from the specification without looking at the code.",
+  C11: "Checking a function's returned value against the expected result.",
+  C12: "Testing one function, several parts together, or the whole product as a user runs it.",
+  C13: "Whether the product meets its requirements, vs how well it performs, scales and stays secure.",
+  C14: "Why running every line of code is not the same as checking every requirement.",
+  C15: "Unit-testing a function that changes state and returns nothing, by asserting on the state after the call.",
+  C16: "Why tests are written as code that can be re-run cheaply, instead of being checked by hand.",
+  D1: "Following if/elif/else and separate if statements to find what code returns.",
+  D2: "Bugs from < vs <= or > vs >= at the edge of a range.",
+  D3: "Bugs from using or where and was needed, or the reverse.",
+  D4: "Crashes on inputs such as an empty string.",
+  D5: "Bugs from comparing or combining values of the wrong type.",
+  D6: "Code that forgets to update state, such as not emptying a cart.",
+  D7: "An error stops the program; a logical bug runs but gives the wrong result.",
+  D8: "Working out whether a given test passes or fails against given code.",
+  D9: "A function that returns something other than what its signature promises, such as strings instead of a bool.",
+  D10: "A check that does the opposite of what was intended, rejecting exactly what it should accept.",
+  D11: "A statement in the wrong place, such as a return inside a loop instead of after it."
+};
+
+const PRACTICE = [
+{ id:"g1-1", src:"Graded Quiz 1 · Q1", type:"A", tags:["A4"],
+  q:[`There is a requirement mentioned in the PRD: *Reject a negative quantity with a clear error message and stop.* This is best described as:`],
+  o:[`functional requirement`,`edge case`,`test case`,`program flow`], a:1,
+  ex:`A negative quantity is invalid input, and rejecting it with a defined message is how a program handles an edge case. Functional requirements describe what the program does with valid input.` },
+{ id:"g1-2", src:"Graded Quiz 1 · Q2", type:"T", tags:["C1"],
+  q:[`We forgot to write a test case for a certain functional requirement in the PRD. What is the problem?`],
+  o:[`We cannot be sure if the app is working correctly`,`The requirement is invalid and should be removed from the PRD`,`Nothing — not every requirement on the PRD needs to be tested`,`The program will refuse to run until every requirement has a test`], a:0,
+  ex:`Every requirement needs at least one test. Without one, that behaviour could be broken and nothing would catch it. The program still runs; we just can't confirm it is correct.` },
+{ id:"g1-3", src:"Graded Quiz 1 · Q3", type:"T", tags:["A5"],
+  q:[`A PRD states *what* a program must do. What does a design document add on top of that?`],
+  o:[`How the program will be built to meet the requirements`,`A more detailed version of the requirements`,`Proof that the requirements do not have any errors`,`The entire codebase, ready to run`], a:0,
+  ex:`The PRD says what the program must do. The design document says how it will be built: its structure, functions and algorithms. It is written before the code, not instead of it.` },
+{ id:"g1-4", src:"Graded Quiz 1 · Q4", type:"T", tags:["B1"],
+  q:[`What does a type-hinted function signature tell you before you read the function's body?`],
+  o:[`Whether the function has been tested already`,`The steps performed by the function internally`,`Only the name of the function`,`The types it should accept and return`], a:3,
+  ex:`A signature such as ⟦def area(length: int, breadth: int) -> int:⟧ declares the parameter types and the return type. It says nothing about the internal steps or whether the function has been tested.` },
+{ id:"g1-5", src:"Graded Quiz 1 · Q5", type:"T", tags:["A1"],
+  q:[`What is a PRD?`],
+  o:[`Product Requirements Document; specifies what the program must do`,`Program Requirements Design; design pattern of the program`,`Program Requirements Design; tells how the program is designed`,`Product Requirements Document; tells us about the edge cases`], a:0,
+  ex:`PRD stands for Product Requirements Document. It specifies what the program must do. Edge cases are one part of a PRD, not its whole purpose.` },
+{ id:"g1-6", src:"Graded Quiz 1 · Q6", type:"H", tags:["D4","D8"],
+  q:[`**Requirement:** Return the word with its first letter capitalised.`, {code:`def capitalise_first(word: str) -> str:
+    return word[0].upper() + word[1:]`}, `Which test case will **fail**?`],
+  o:[`⟦capitalise_first("hello")⟧ → ⟦"Hello"⟧`,`⟦capitalise_first("")⟧ → ⟦""⟧`,`⟦capitalise_first("Hello")⟧ → ⟦"Hello"⟧`,`⟦capitalise_first("@")⟧ → ⟦"@"⟧`], a:1,
+  ex:`An empty string has no first character, so ⟦word[0]⟧ raises an IndexError and the program crashes instead of returning ⟦""⟧. The other inputs all work; ⟦"@".upper()⟧ is still ⟦"@"⟧.` },
+{ id:"g1-7", src:"Graded Quiz 1 · Q7", type:"H", tags:["D2","D8"],
+  q:[`**Requirement:** A username must be 5–12 characters long, start with an English letter, and contain only English letters, digits, and _.`, {code:`def valid_username(username):
+    if len(username) <= 5 or len(username) >= 12:
+        return False
+
+    if not username[0].isalpha():
+        return False
+
+    for ch in username:
+        if not (ch.isalnum() or ch == "_"):
+            return False
+
+    return True`}, `Which test case will **fail**?`],
+  o:[`⟦valid_username("hello123")⟧ → True`,`⟦valid_username("12")⟧ → False`,`⟦valid_username("hello")⟧ → True`,`⟦valid_username("hell")⟧ → False`], a:2,
+  ex:`"hello" has 5 characters, which the requirement allows. The code rejects ⟦len(username) <= 5⟧, so it returns False and the test expecting True fails. The check should be ⟦< 5 or > 12⟧.` },
+{ id:"g1-8", src:"Graded Quiz 1 · Q8", type:"H", tags:["C6","C9"],
+  q:[`**Requirement:** The fare is ₹50 + ₹12 per kilometre, with a minimum fare of ₹100.`, {code:`def calculate_fare(distance):
+    fare = 50 + 12 * distance
+
+    if fare < 100:
+        return 100
+
+    return fare`}, `Which test case is most useful for **checking the minimum-fare rule**?`],
+  o:[`⟦calculate_fare(10)⟧ → 170`,`⟦calculate_fare(5)⟧ → 110`,`⟦calculate_fare(4)⟧ → 100`,`⟦calculate_fare(20)⟧ → 290`], a:2,
+  ex:`For 4 km the formula gives 50 + 48 = 98, which is below ₹100, so this is the only test that actually triggers the minimum-fare rule. The other distances all produce fares above 100.` },
+{ id:"g1-9", src:"Graded Quiz 1 · Q9", type:"A", tags:["D1"],
+  q:[{code:`def ticket_price(age):
+    if age < 13:
+        return 100
+    elif age < 60:
+        return 200
+    else:
+        return 150`}, `What will ⟦ticket_price(60)⟧ return?`],
+  o:[`100`,`150`,`200`,`60`], a:1,
+  ex:`60 is not less than 13 and not less than 60, so neither condition is true and the ⟦else⟧ branch returns 150.` },
+{ id:"g1-10", src:"Graded Quiz 1 · Q10", type:"H", tags:["C2","C7"],
+  q:[`A cinema app allows users to **book seats**. A seat can be booked only if it is currently available. A student wants to test the behaviour **"the app should not allow a user to book an already-booked seat."** Which of the following is the **best way to write the test case** for this behaviour?`],
+  o:[`Input: Seat A5\nExpected result: Booking should be rejected`,`Starting state: Seat A5 is available\nAction: Book seat A5\nExpected result: Seat A5 is booked`,`Starting state: Seat A5 is already booked\nAction: Try to book seat A5 again\nExpected result: Booking should be rejected`,`Starting state: Cinema has 100 seats and all are available\nActions: Book several seats\nExpected result: The seat map should be displayed`], a:2,
+  ex:`To test that a booked seat can't be booked again, the starting state must already have A5 booked, and the action tries to book it again. Option a has no starting state, b tests a normal booking, and d checks something unrelated.` },
+{ id:"g1-11", src:"Graded Quiz 1 · Q11", type:"A", tags:["C7"],
+  q:[`A shopping cart initially contains no items. Consider these two sequences:`, `**Test Sequence 1:** Add *Laptop* → Remove *Laptop*\n**Test Sequence 2:** Remove *Laptop* → Add *Laptop*`, `Which test sequence is correct?`],
+  o:[`Both sequences must produce the same result because they contain the same two actions.`,`Sequence 1 should end with an empty cart, while Sequence 2 should print an "Invalid" message.`,`Sequence 2 is invalid because an item can never be removed from a cart.`,`The order matters only for stateless programs.`], a:1,
+  ex:`A cart is stateful, so order matters. Sequence 1 adds then removes, ending with an empty cart. Sequence 2 tries to remove something that isn't there, which should produce an error message before the add goes ahead.` },
+{ id:"g1-12", src:"Graded Quiz 1 · Q12", type:"H", tags:["D6"],
+  q:[`The following function is supposed to place an order, and empty the cart for the next user to start shopping. Will this work?`, {code:`def place_order(cart):
+    if not cart:
+        print("Your cart is empty.")
+        return
+    print("Order placed successfully.")
+    show_cart(cart)
+    input("Press enter to continue...")`}],
+  o:[`Yes, it is placing the order and printing successfully.`,`No, it is returning when the cart is empty.`,`No, it is not emptying the cart after placing the order.`,`Yes, it is placing the order, emptying the cart and displaying the cart.`], a:2,
+  ex:`The function confirms the order and shows the cart, but nothing clears it (for example ⟦cart.clear()⟧). The next user would start with the previous order still in the cart. Returning early on an empty cart is correct behaviour.` },
+{ id:"g1-13", src:"Graded Quiz 1 · Q13", type:"A", tags:["B1"],
+  q:[`A weather app has a function that takes a **city name** and the **current temperature**, and returns a message describing the weather. Which function signature best communicates that the function expects a string and a decimal number, and returns a string?`],
+  o:[`⟦def describe_weather(city, temperature):⟧`,`⟦def describe_weather(city: str, temperature: float) -> str:⟧`,`⟦def describe_weather(city: str, temperature: str) -> float:⟧`,`⟦def describe_weather(city: str, temperature: float):⟧`], a:1,
+  ex:`⟦city: str⟧ and ⟦temperature: float⟧ declare a string and a decimal number, and ⟦-> str⟧ declares the return type. Option d leaves out the return type, and c has the types the wrong way round.` },
+{ id:"g1-14", src:"Graded Quiz 1 · Q14", type:"H", tags:["D2","D8"],
+  q:[`**Requirement:** A parking lot charges:\n₹20 for parking up to 2 hours\n₹50 for more than 2 hours and up to 5 hours\n₹100 for more than 5 hours`, {code:`def parking_fee(hours: float) -> int:
+    if hours < 2:
+        return 20
+    elif hours <= 5:
+        return 50
+    else:
+        return 100`}, `Which of the following function calls will show that the function is incorrect?`],
+  o:[`⟦parking_fee(1)⟧ → 20`,`⟦parking_fee(2)⟧ → 20`,`⟦parking_fee(4)⟧ → 50`,`⟦parking_fee(6)⟧ → 100`], a:1,
+  ex:`"Up to 2 hours" includes 2, so 2 hours should cost ₹20. The code uses ⟦hours < 2⟧, so 2 falls into the next branch and returns 50. This test fails and exposes the off-by-one bug.` },
+{ id:"g1-15", src:"Graded Quiz 1 · Q15", type:"H", tags:["D5"],
+  q:[`The course dictionary is created like this:`, {code:`course = {
+    "students": ["Alice", "Bob"],
+    "capacity": 2
+}`}, `The following function is supposed to register a student only if the course isn't full. Will this work?`, {code:`def register_student(course, student):
+    if course["students"] == course["capacity"]:
+        print("Course is full.")
+        return
+    course["students"].append(student)
+    print("Student registered successfully.")`}, `Which statement is correct?`],
+  o:[`Yes, it works correctly.`,`No, the function will always say the course is full.`,`No, it compares the list of students with the capacity number.`,`No, ⟦.append()⟧ cannot be used with students.`], a:2,
+  ex:`⟦course["students"]⟧ is a list and ⟦course["capacity"]⟧ is a number, so ⟦==⟧ is never True and the course is never reported as full. The check should compare ⟦len(course["students"])⟧ with the capacity.` },
+{ id:"g1-16", src:"Graded Quiz 1 · Q16", type:"A", tags:["A3"],
+  q:[`A parking application allows users to start a parking session. The requirement says: "When a parking session is started, the application records the start time." Which PRD section should contain this requirement?`],
+  o:[`Problem Statement & Description`,`Interface`,`Functional Requirements`,`Edge Cases`], a:2,
+  ex:`Recording the start time is a behaviour the program must perform on valid input, so it belongs under Functional Requirements.` },
+{ id:"g1-17", src:"Graded Quiz 1 · Q17", type:"A", tags:["A4"],
+  q:[`A bus-pass application needs to let users renew their monthly pass. Which of the following is the **best example of a functional requirement**?`],
+  o:[`"The application should not allow a new user to renew their monthly pass. It should print an error message."`,`"The application is designed to help passengers manage their bus passes."`,`"When the user selects Renew, the application extends the pass by one month."`,`"The renewal screen should be attractive."`], a:2,
+  ex:`A functional requirement states a concrete behaviour on valid input. Option a describes how to handle an invalid case (an edge case), b is a problem description, and d is a vague preference that can't be tested.` },
+{ id:"g1-18", src:"Graded Quiz 1 · Q18", type:"A", tags:["A4","C4"],
+  q:[`A bike-rental application allows a user to start a rental only when the selected bike is available. Which information is **most important to specify as an edge case**?`],
+  o:[`What the application is used for, and by whom`,`What information appears on the rental screen`,`What happens when the bike is in use already`,`Users can start a bike rental when they select the appropriate option`], a:2,
+  ex:`An edge case is an unusual or invalid situation the program must handle. Trying to rent a bike that is already in use is exactly that, and the PRD must say how the program responds.` },
+{ id:"g1-19", src:"Graded Quiz 1 · Q19", type:"A", tags:["D1","D2"],
+  q:[`A movie ticket system should give a discount to customers aged 60 or older.`, {code:`def ticket_price(age):
+    price = 100
+    if age > 60:
+        price = 80
+    return price`}, `What will be returned for age = 60?`],
+  o:[`60`,`80`,`100`,`error`], a:2,
+  ex:`The condition is ⟦age > 60⟧, and 60 is not greater than 60, so the price stays 100. This is an off-by-one bug: "60 or older" needs ⟦age >= 60⟧.` },
+{ id:"g1-20", src:"Graded Quiz 1 · Q20", type:"A", tags:["D1"],
+  q:[`A game gives a player one extra life when their score reaches 100.`, {code:`def check_life(score, lives):
+    if score >= 100:
+        lives += 1
+    if score >= 200:
+        lives += 1
+    return lives`}, `What is returned by ⟦check_life(200, 3)⟧?`],
+  o:[`3`,`5`,`4`,`6`], a:1,
+  ex:`These are two separate ⟦if⟧ statements, not ⟦if/elif⟧, so both are checked. A score of 200 satisfies both, and lives goes from 3 to 4 to 5.` },
+
+{ id:"g2-1", src:"Graded Quiz 2 · Q1", type:"T", tags:["C4"],
+  q:[`A program produces the correct answer for all normal inputs but handles a boundary value incorrectly. Which statement is correct?`],
+  o:[`The program is correct because normal inputs work`,`The program is correct if the code coverage is 100%`,`The program is incorrect because an edge case is not handled correctly`,`The program has an error only if it crashes`], a:2,
+  ex:`A program is correct only when it meets every requirement and handles every edge case as specified. A wrong result at a boundary is a bug even if the program never crashes.` },
+{ id:"g2-2", src:"Graded Quiz 2 · Q2", type:"T", tags:["C10"],
+  q:[`In **black-box testing**, what do we use to design tests?`],
+  o:[`design; the data structures and algorithms used to build the solution`,`requirements; specification and expected behaviour`,`code; implementation of every function`,`code; order of execution and variable names`], a:1,
+  ex:`Black-box testing treats the program as a closed box. Tests are designed from the specification and the expected behaviour, without looking at how the code is written.` },
+{ id:"g2-3", src:"Graded Quiz 2 · Q3", type:"A", tags:["C8"],
+  q:[`Which pair of inputs best represents the **two equivalence classes** (as per the Equivalence Partitioning Method)?`, {code:`def classify_age(age: int) -> str:
+    if age < 18:
+        return "minor"
+    return "adult"`}],
+  o:[`1 and 2`,`10 and 25`,`16 and 17`,`18 and 25`], a:1,
+  ex:`There are two classes: ages below 18 (minor) and 18 or above (adult). 10 and 25 take one representative from each. Every other pair has both values in the same class.` },
+{ id:"g2-4", src:"Graded Quiz 2 · Q4", type:"A", tags:["C9"],
+  q:[`A specification says that an amount **must not exceed 10,000**. Which test cases are most useful for Boundary-Value Analysis?`],
+  o:[`1,000, 5,000, and 9,000`,`9,998, 9,999, and 10,000`,`9,999, 10,000, and 10,001`,`10,000, 10,001, and 10,002`], a:2,
+  ex:`Boundary-value analysis tests the limit and the values just either side of it: 9,999 (allowed), 10,000 (the limit, still allowed) and 10,001 (just over, should be rejected).` },
+{ id:"g2-5", src:"Graded Quiz 2 · Q5", type:"H", tags:["D2","C11"],
+  q:[`The specification says scores from **0 to 100 (inclusive of both)** are valid for the below function. Which assertion is most likely to expose the bug?`, {code:`def valid_score(score: int) -> bool:
+    return score >= 0 and score < 100`}],
+  o:[`⟦assert valid_score(100) == True⟧`,`⟦assert valid_score(100) == False⟧`,`⟦assert valid_score(0) == True⟧`,`⟦assert valid_score(0) == False⟧`], a:0,
+  ex:`The spec says 100 is valid, so the expected result is True. The code uses ⟦score < 100⟧ and returns False, so this assertion fails and exposes the bug. Option b asserts the buggy behaviour, so it would pass.` },
+{ id:"g2-6", src:"Graded Quiz 2 · Q6", type:"T", tags:["C7"],
+  q:[`What is the main purpose of **state transition testing**?`],
+  o:[`To test each function independently from all other functions`,`To test valid and invalid movements between program states`,`To test inputs from every possible equivalence class`,`To test values immediately around numerical boundaries`], a:1,
+  ex:`State transition testing exercises how a stateful program moves between states, including actions that should be refused in a given state. Options c and d describe equivalence partitioning and boundary-value analysis.` },
+{ id:"g2-7", src:"Graded Quiz 2 · Q7", type:"A", tags:["C13"],
+  q:[`Which requirement would be tested primarily through **non-functional testing**?`],
+  o:[`The system calculates the correct total price`,`The system rejects an invalid customer age`,`The system displays the correct account balance`,`The system supports 10,000 simultaneous users`], a:3,
+  ex:`Supporting 10,000 simultaneous users is about performance and scale, which non-functional testing checks. The other three are behaviours the program must perform, so they are functional.` },
+{ id:"g2-8", src:"Graded Quiz 2 · Q8", type:"H", tags:["C7","C9"],
+  q:[`A bank account starts with a balance of 100. Which action sequence best tests that the withdrawal amount must be less than or equal to the balance?`, {code:`def withdraw(balance: int, amount: int) -> int:
+    if amount <= balance:
+        return balance - amount
+    return balance`}],
+  o:[`Withdraw 20, then withdraw 30`,`Withdraw 20, then deposit 30`,`Withdraw 50, then calculate the balance`,`Withdraw 100, then withdraw 1`], a:3,
+  ex:`Withdrawing 100 uses exactly the full balance, which should be allowed. The balance is then 0, so withdrawing 1 more should be refused. That one sequence checks both sides of the rule; the others stay well within the balance.` },
+{ id:"g2-9", src:"Graded Quiz 2 · Q9", type:"A", tags:["C12"],
+  q:[`Given the following two functions, which test is best classified as an **integration test**?`, {code:`def add_tax(price: float) -> float:
+    return price * 1.1
+
+def checkout(price: float, discount: float) -> float:
+    discounted_price = price - discount
+    return add_tax(discounted_price)`}],
+  o:[`Call ⟦add_tax(100)⟧ and check that it returns 110`,`Call ⟦checkout(100, 10)⟧ and check that it returns 99`,`Inspect whether ⟦add_tax⟧ contains a multiplication operation`,`Check whether a customer can complete checkout through the application website`], a:1,
+  ex:`⟦checkout⟧ calls ⟦add_tax⟧, so testing it checks two functions working together, which is an integration test. Option a tests one function alone (a unit test), and d runs the whole product as a user would (a system test).` },
+{ id:"g2-10", src:"Graded Quiz 2 · Q10", type:"T", tags:["B5"],
+  q:[`What is the main idea behind **functional core, imperative shell**?`],
+  o:[`Put pure computation in the core and side effects in ⟦main()⟧`,`Put all program logic in ⟦main()⟧ and move all functions to a different file`,`Put state changes in the core and return values only from the shell`,`Eliminate all procedural code so that the program becomes fully functional`], a:0,
+  ex:`The logic lives in pure, testable functions (the core), and input, output and state changes stay in a thin outer layer such as ⟦main()⟧. A useful program can't remove side effects entirely, so d isn't the goal.` },
+{ id:"g2-11", src:"Graded Quiz 2 · Q11", type:"A", tags:["B4"],
+  q:[`A function prints to the Terminal using the ⟦print()⟧ function. Which change would make its behaviour **pure**?`],
+  o:[`Keep ⟦print()⟧ inside the function, but pass the value as a parameter`,`Store the result in a global variable, and let the caller access it`,`Replace ⟦print()⟧ with ⟦return⟧, and let the caller display the result`,`Keep ⟦print()⟧ inside the function, but remove all other statements`], a:2,
+  ex:`Printing is a side effect. Returning the value removes it, and the caller decides how to display the result. Writing to a global variable would just swap one side effect for another.` },
+{ id:"g2-12", src:"Graded Quiz 2 · Q12", type:"A", tags:["B4"],
+  q:[`Which function is **pure**?`],
+  o:[{code:`def f(x):
+    print(x)
+    return x * 2`},{code:`def f(x):
+    global total
+    total += x`},{code:`def f(x):
+    return x * 2`},{code:`def f(x):
+    global items
+    items.append(x)
+    return items`}], a:2,
+  ex:`Option c depends only on its parameter and changes nothing outside itself. Option a prints, b changes a global variable, and d changes a global list.` },
+{ id:"g2-13", src:"Graded Quiz 2 · Q13", type:"A", tags:["B6"],
+  q:[`Which of these changes would make it easier to unit test the following function?`, {code:`def square() -> None:
+    x = int(input())
+    print(x * x)`}],
+  o:[`No changes needed, the function can be unit tested as it is`,`Keep ⟦input()⟧, but replace ⟦print()⟧ with a global variable`,`Pass ⟦x⟧ as a parameter, but keep ⟦print()⟧ inside the function`,`Pass ⟦x⟧ as a parameter and return the calculated result`], a:3,
+  ex:`A test can't easily supply ⟦input()⟧ or read what ⟦print()⟧ shows. Taking ⟦x⟧ as a parameter and returning ⟦x * x⟧ lets the test pass a value in (Arrange) and check the result (Assert).` },
+{ id:"g2-14", src:"Graded Quiz 2 · Q14", type:"T", tags:["C2","B3"],
+  q:[`Why does a unit test for a stateful function need to **arrange the starting state**?`],
+  o:[`The function's source code must be reproduced before testing`,`The function's behaviour may depend on the state before the action`,`The test framework needs a copy of every program variable`,`The function cannot otherwise receive any parameters`], a:1,
+  ex:`A stateful function's result depends on what already exists, such as what is already in the cart. The Arrange step sets up that state so the test checks the exact situation it means to.` },
+{ id:"g2-15", src:"Graded Quiz 2 · Q15", type:"A", tags:["B7"],
+  q:[`Which statement about ⟦most_frequent⟧ is FALSE?`, {code:`def most_frequent(items: list[str]) -> str | None:
+    """Return the item that appears most often in the list.
+    Assumes items is a list of strings.
+    If the list is empty, return None.
+    If two or more items tie for most frequent, return whichever of the tied items appears first in the list.
+    """`}],
+  o:[`Calling it on an empty list makes the function return None`,`When two items tie, the one appearing first in the list is returned`,`A list whose items are all different returns the first item in it`,`A list with one repeated item returns None, as there is no winner`], a:3,
+  ex:`A list containing one repeated item has a clear winner: that item. The docstring only returns None for an empty list. Option c is true: when every item appears once, they all tie, and the first one wins.` },
+{ id:"g2-16", src:"Graded Quiz 2 · Q16", type:"H", tags:["C6"],
+  q:[`Which single test most directly checks the **tie-breaking rule** in ⟦most_frequent⟧?`, {code:`def most_frequent(items: list[str]) -> str | None:
+    """Return the item that appears most often in the list.
+    Assumes items is a list of strings.
+    If the list is empty, return None.
+    If two or more items tie for most frequent, return whichever of the tied items appears first in the list.
+    """`}],
+  o:[{code:`def test_most_frequent():
+    items = ["red", "blue", "red", "blue"]
+    result = most_frequent(items)
+    assert result == "red"`},{code:`def test_most_frequent():
+    items = ["red", "blue", "red", "red"]
+    result = most_frequent(items)
+    assert result == "red"`},{code:`def test_most_frequent():
+    items = []
+    result = most_frequent(items)
+    assert result is None`},{code:`def test_most_frequent():
+    items = ["red", "red", "red"]
+    result = most_frequent(items)
+    assert result == "red"`}], a:0,
+  ex:`Only option a creates a tie: red and blue appear twice each, and red comes first, so the expected answer depends on the tie-breaking rule. Options b and d have a clear winner, and c checks the empty-list rule.` },
+{ id:"g2-17", src:"Graded Quiz 2 · Q17", type:"H", tags:["D3","D8"],
+  q:[`The specification says the following function should return True only when the seat number is valid (from 1 to ⟦total⟧, inclusive) and not already booked. Which assertion is most likely to expose the bug?`, {code:`def can_book(seat: int, booked: list[int], total: int) -> bool:
+    return 1 <= seat <= total or seat not in booked`}],
+  o:[`⟦assert can_book(1, [], 50) == True⟧`,`⟦assert can_book(20, [30], 50) == True⟧`,`⟦assert can_book(25, [], 50) == True⟧`,`⟦assert can_book(60, [10, 20], 50) == False⟧`], a:3,
+  ex:`With ⟦or⟧, the function returns True if either condition holds. Seat 60 is out of range but not booked, so the code returns True while the spec says False. The bug only shows when the two conditions disagree; the other assertions pass.` },
+{ id:"g2-18", src:"Graded Quiz 2 · Q18", type:"A", tags:["C9"],
+  q:[`Spider-Man tracks how many web-fluid cartridges he has left, and a gadget reports his supply status. Using boundary-value analysis, which pair of quantities best tests the boundary between "low" and "loaded"?`, {code:`def web_status(cartridges: int) -> str:
+    """Return Spidey's web-fluid status.
+
+    - 0 cartridges  -> "empty"
+    - 1 to 5        -> "low"
+    - 6 or more     -> "loaded"
+    """`}],
+  o:[`5 and 6, the values on each side of the limit`,`1 and 5, the two ends of the "low" band`,`0 and 1, the values around the empty limit`,`6 and 7, two quantities inside "loaded"`], a:0,
+  ex:`The low/loaded boundary sits between 5 and 6. Testing 5 (should be "low") and 6 (should be "loaded") checks both sides of it. Option c tests a different boundary.` },
+{ id:"g2-19", src:"Graded Quiz 2 · Q19", type:"T", tags:["C14"],
+  q:[`A developer writes 100 unit tests. On executing the unit tests, they find that code coverage is also 100%. They conclude the program is functionally correct. Which of the following is true?`],
+  o:[`Conclusion is unjustified. If a requirement is missing, there will be no corresponding line of code to run.`,`Conclusion is unjustified. This is because code coverage can never truly be 100%.`,`Conclusion is justified. If every line of code runs and every test passes, then every requirement has necessarily been checked.`,`Conclusion is unjustified. Functional requirements might pass, but security and performance have not been checked.`], a:0,
+  ex:`Code coverage only measures which lines ran. A requirement the code never implemented has no lines to run, so it can be missed even at 100%. Test coverage, measured against the spec, is what shows every requirement was checked.` },
+{ id:"g2-20", src:"Graded Quiz 2 · Q20", type:"T", tags:["C12"],
+  q:[`A team's unit tests all pass — every function works correctly on its own. But when the program runs as a whole, it still fails. What does this tell us?`],
+  o:[`The unit tests must be wrong, because if every function passes its unit test the whole program is guaranteed to work.`,`Unit testing was the wrong choice here. Only system tests are ever worth writing, since they run the program as a user would.`,`Unit tests check functions in isolation, so they can miss faults that appear only when parts work together. Integration and system tests are needed too.`,`The failure must be about speed or security, because functional faults are always caught by unit tests.`], a:2,
+  ex:`Unit tests check each function on its own. Faults in how the parts connect only show up when they run together, which is what integration and system tests are for.` },
+
+{ id:"m1-1", src:"Make-up Quiz 1 · Q1", type:"T", tags:["A2"],
+  q:[`Why is the instruction "write a program that splits a bill among friends" insufficient on its own?`],
+  o:[`Bill-splitting is too simple to write a program`,`AI will fail to generate a program`,`Programming language is not mentioned`,`Requirements are not given clearly`], a:3,
+  ex:`The instruction leaves key questions open: uneven splits, tax or tip, the output format, invalid input. Without clear requirements, there's no way to decide which program is correct.` },
+{ id:"m1-2", src:"Make-up Quiz 1 · Q2", type:"T", tags:["A3"],
+  q:[`Which PRD section states the exact inputs (with type and valid range) and the exact output format?`],
+  o:[`Interface`,`Problem Statement & Description`,`Test Cases`,`Edge Cases`], a:0,
+  ex:`The Interface section states how the program is run, the exact inputs with their types and valid ranges, and the exact output format.` },
+{ id:"m1-3", src:"Make-up Quiz 1 · Q3", type:"T", tags:["B1"],
+  q:[`Role of a type-hinted signature like ⟦def has_digit(pwd: str) -> bool:⟧?`],
+  o:[`It's the step-by-step logic inside the function`,`A contract fixing input types accepted and output returned, which the algorithm must match`,`It replaces the need for a Design Document`,`It describes the high-level flow of the whole program`], a:1,
+  ex:`A signature is a contract: ⟦has_digit⟧ takes a string and returns a bool, and the function's algorithm must stick to that. The step-by-step logic and the program flow are described elsewhere.` },
+{ id:"m1-4", src:"Make-up Quiz 1 · Q4", type:"T", tags:["C1"],
+  q:[`Why do we write test cases before we come up with the design or write code?`],
+  o:[`Code runs faster when tests exist first`,`Test is derived from the PRD and helps to check the solution before we create it`,`Tests should always be run during the PRD stage itself`,`This is necessary only for stateless programs`], a:1,
+  ex:`Tests come from the PRD, not the code. Writing them first turns each requirement into a concrete check while the spec is fresh, and avoids tests that just confirm whatever the code happens to do.` },
+{ id:"m1-5", src:"Make-up Quiz 1 · Q5", type:"T", tags:["D7"],
+  q:[`What distinguishes a logical bug from an error?`],
+  o:[`A logical bug crashes immediately; an error runs to completion`,`A logical bug only occurs in stateful programs`,`We will not be able to find the difference`,`A logical bug runs to completion but produces the wrong result`], a:3,
+  ex:`An error stops the program. A logical bug lets it finish but gives the wrong result, so it is only caught by comparing the output with what the spec expects.` },
+{ id:"u-8", src:"Ungraded Quiz (Food Ordering) · Q8, reworded", type:"T", tags:["B3"],
+  q:[`Why must a test case for a *stateful* program include a starting state, while a test case for a *stateless* program does not need one?`],
+  o:[`A stateless program has no functional requirements that depend on the input`,`A stateful program's output depends on past actions, not just the current input`,`Starting state is optional in both; it is only written for neatness`,`A stateful program has more edge cases than a stateless program`], a:1,
+  ex:`A stateless program's output depends only on the current input. A stateful program remembers past actions, so a test has to say what state it starts from before the action is performed.` },
+
+{ id:"m2-1", src:"Make-up Quiz 2 · Q1", type:"A", tags:["C7"],
+  q:[`A to-do list app initially contains no tasks. Consider these two sequences:`, `**Test Sequence 1:** Add *Buy milk* → Mark *Buy milk* as done\n**Test Sequence 2:** Mark *Buy milk* as done → Add *Buy milk*`, `Which test is written for a valid sequence of actions in the to-do list app?`],
+  o:[`Only Test Sequence 1`,`Only Test Sequence 2`,`Both of them`,`Neither of them`], a:0,
+  ex:`A task has to exist before it can be marked done. Sequence 1 adds the task first, so it is valid. Sequence 2 tries to mark a task that doesn't exist yet.` },
+{ id:"m2-2", src:"Make-up Quiz 2 · Q2", type:"H", tags:["C2"],
+  q:[`A banking app allows users to withdraw money. A withdrawal is allowed only if the balance is enough. A student wants to test the behaviour **"the app should not allow a user to withdraw more than their balance."**`, `Which of the following is the best way to write the test case for this behaviour?`],
+  o:[`Starting state: Balance is ₹1,000\nAction: Withdraw ₹500\nExpected result: Balance is ₹500`,`Starting state: Bank has 50 customers and all have money\nActions: Make several withdrawals\nExpected result: The account summary should be displayed`,`Input: ₹2,000\nExpected result: Withdrawal should be rejected`,`Starting state: Balance is ₹1,000\nAction: Try to withdraw ₹2,000\nExpected result: Withdrawal should be rejected`], a:3,
+  ex:`To test refusing an overdraw, start with a known balance and try to withdraw more than it. Option a tests a normal withdrawal, b is too vague to check, and c has no starting state, so ₹2,000 might be fine for some accounts.` },
+{ id:"m2-3", src:"Make-up Quiz 2 · Q3", type:"H", tags:["C9","C6"],
+  q:[`**Requirement:** Shipping is free for orders of ₹500 or more; otherwise it costs ₹40.`, {code:`def total_cost(order):
+    if order >= 500:
+        return order
+
+    return order + 40`}, `Which test case is most useful for **checking the free-shipping rule**?`],
+  o:[`⟦total_cost(500)⟧ → 500`,`⟦total_cost(100)⟧ → 140`,`⟦total_cost(250)⟧ → 290`,`⟦total_cost(50)⟧ → 90`], a:0,
+  ex:`₹500 is exactly where shipping becomes free, so checking that an order of 500 costs 500 (no ₹40 added) tests the "or more" part of the rule. The other orders are all well below 500 and never reach it.` },
+{ id:"m2-4", src:"Make-up Quiz 2 · Q4", type:"A", tags:["D1"],
+  q:[{code:`def delivery_charge(order_total):
+    if order_total > 500:
+        return 0
+    elif order_total > 200:
+        return 30
+    else:
+        return 50`}, `What will ⟦delivery_charge(500)⟧ return?`],
+  o:[`0`,`30`,`50`,`20`], a:1,
+  ex:`500 is not greater than 500, so the first branch is skipped. It is greater than 200, so the function returns 30.` },
+{ id:"m2-5", src:"Make-up Quiz 2 · Q5", type:"T", tags:["C3"],
+  q:[`A test case has the wrong expected output because the PRD was misunderstood by the developer. What is the problem?`],
+  o:[`All tests will always pass`,`A correct program may fail the test, and a wrong program may pass it`,`The program will automatically correct the PRD`,`Nothing — a test case only needs an input, not an expected output`], a:1,
+  ex:`Expected outputs must come from the requirements. If the expected output is wrong, a correct program fails the test, while a program built on the same misunderstanding passes it.` },
+{ id:"m2-6", src:"Make-up Quiz 2 · Q6", type:"T", tags:["C4"],
+  q:[`We wrote test cases only for normal inputs and no tests for edge cases. What is the problem?`],
+  o:[`The program will refuse to run until edge cases are tested`,`Nothing — edge cases are rare, so they do not need to be tested`,`Bugs that appear only on unusual inputs may go unnoticed`,`The test cases for normal inputs will now fail`], a:2,
+  ex:`Programs often break on unusual input such as empty, negative or out-of-range values. Without tests for those cases, such bugs go unnoticed.` },
+{ id:"m2-7", src:"Make-up Quiz 2 · Q7", type:"A", tags:["A4"],
+  q:[`There is a requirement mentioned in the PRD: **The app must let a user add an item to the cart.** This is best described as`],
+  o:[`functional requirement`,`edge case`,`interface`,`test case`], a:0,
+  ex:`Adding an item is a behaviour the app must perform on valid input, which makes it a functional requirement.` },
+
+{ id:"s-1", src:"Practice Set · Q1", type:"T", tags:["C8"],
+  q:[`What is the core idea of equivalence partitioning?`],
+  o:[`Split inputs into classes and test one value from each class`,`Test every possible input value the program can receive`,`Test only the values found at the edges of each range`,`Test only the inputs that are expected to be invalid`], a:0,
+  ex:`Equivalence partitioning groups inputs the program should handle the same way, then tests one representative from each group. It doesn't need every value, only boundary values, or only invalid ones.` },
+{ id:"s-2", src:"Practice Set · Q2", type:"A", tags:["C9"],
+  q:[`A rule says a withdrawal amount must not exceed 10,000. Using boundary-value analysis, which inputs best test this rule?`],
+  o:[`5,000 and 7,500, since middle values are the most typical`,`0 and 20,000, since extreme values stress the program most`,`9,999, 10,000, and 10,001, the values around the limit`,`10,050 and 10,100, values just past the allowed limit`], a:2,
+  ex:`Faults cluster at the edges of a range, so test just below, at and just above the limit. Middle values rarely expose edge faults, and the other options miss the boundary itself.` },
+{ id:"s-3", src:"Practice Set · Q3", type:"T", tags:["C12"],
+  q:[`Which test most precisely locates a fault in a single function?`],
+  o:[`A system test, running the whole product as a user would`,`An integration test, running several components together`,`A unit test, running one function on its own`,`A load test, running the product under heavy demand`], a:2,
+  ex:`A unit test runs one function alone, so a failure points straight at that function. Integration and system tests involve more parts, which makes a failure harder to locate. A load test is non-functional.` },
+{ id:"s-4", src:"Practice Set · Q4", type:"T", tags:["C2"],
+  q:[`What do the three steps of the Arrange–Act–Assert structure do, in order?`],
+  o:[`Call the function, set up the inputs, then check the result`,`Set up the inputs, call the function, then check the result`,`Check the result, set up the inputs, then call the function`,`Set up the inputs, check the result, then call the function`], a:1,
+  ex:`Arrange sets up the inputs, Act calls the function being tested, and Assert checks the result against what is expected.` },
+{ id:"s-5", src:"Practice Set · Q5", type:"A", tags:["C11"],
+  q:[`A function ⟦cart_total(cart)⟧ returns the cart's total as a number. How should its unit test assert the result?`],
+  o:[`Call it, then inspect the cart to see how it changed`,`Check that the function printed the correct total line`,`Check that a global total variable was updated correctly`,`Assert that the number it returns equals the expected total`], a:3,
+  ex:`⟦cart_total⟧ reads the cart and returns a number, so the test asserts on that return value. Inspecting the cart afterwards is how you test a function that changes state; printed output and globals are the wrong things to check.` },
+{ id:"s-6", src:"Practice Set · Q6", type:"T", tags:["B6"],
+  q:[`A function reads an input from a global variable instead of a parameter. Why does this make it hard to test?`],
+  o:[`It returns a value whose type is hard to predict`,`It runs too slowly to be called inside a fast test`,`The input is hidden, so a test cannot set it through the call`,`It lacks comments explaining what the global variable means`], a:2,
+  ex:`A value read from a global is a hidden input. The test can't set it through the normal function call, so the Arrange step can't reach it.` },
+{ id:"s-7", src:"Practice Set · Q7", type:"T", tags:["B5"],
+  q:[`What does the "functional core, imperative shell" design recommend?`],
+  o:[`Remove all input and output so every function is fully pure`,`Keep pure logic in the core and input/output in a thin shell`,`Put all logic and input/output together inside one large function`,`Keep input/output in the core and the pure logic in the shell`], a:1,
+  ex:`Pure logic goes in the core, and unavoidable input, output and state changes go in a thin shell around it. Option d is the exact reverse, and a is impossible for a program that does anything useful.` },
+{ id:"s-8", src:"Practice Set · Q8", type:"A", tags:["C5","C11"],
+  q:[{code:`def sling_speed(distance: int, seconds: int) -> float | None:
+    """Return distance divided by seconds, as a float (a web-swing speed).
+    Assumes distance and seconds are integers.
+    If seconds is zero, return None instead of dividing.
+    """`}, `Which ⟦sling_speed⟧ test correctly checks that None is returned as per requirements?`],
+  o:[`⟦sling_speed(100, 0)⟧`,`⟦sling_speed(50, 0)⟧`,`⟦sling_speed(0, 10)⟧`,`⟦sling_speed(100, 4)⟧`], a:0,
+  ex:`None is returned when seconds is zero, so the test must pass 0 as the second argument. Note that option b also passes 0 as seconds and would return None too. Option c sets distance to 0, which simply returns 0.0.` },
+{ id:"s-9", src:"Practice Set · Q9", type:"H", tags:["D3","C6"],
+  q:[{code:`def can_sit_exam(attendance: int, has_paid_fees: bool) -> bool:
+    """Return True if a student may sit the exam, otherwise False.
+    Assumes attendance is an integer from 0 to 100, has_paid_fees is True or False.
+    A student may sit the exam only if attendance is at least 75
+    AND has_paid_fees is True. Otherwise, return False.
+    """`}, `While implementing the code for ⟦can_sit_exam⟧, a student uses ⟦or⟧ instead of ⟦and⟧ by mistake. Which single test would reveal this bug?`],
+  o:[`attendance 90 with fees unpaid, which should return False`,`attendance 90 with fees paid, which should return True`,`attendance 50 with fees unpaid, which should return False`,`attendance 80 with fees paid, which should return True`], a:0,
+  ex:`The bug only shows when the two conditions disagree. With attendance 90 but fees unpaid, ⟦and⟧ gives False but ⟦or⟧ gives True. In the other cases both operators give the same answer, so nothing is revealed.` },
+{ id:"s-10", src:"Practice Set · Q10", type:"A", tags:["C9"],
+  q:[{code:`def can_sit_exam(attendance: int, has_paid_fees: bool) -> bool:
+    """Return True if a student may sit the exam, otherwise False.
+    Assumes attendance is an integer from 0 to 100, has_paid_fees is True or False.
+    A student may sit the exam only if attendance is at least 75
+    AND has_paid_fees is True. Otherwise, return False.
+    """`}, `Which pair of inputs best tests the attendance boundary in ⟦can_sit_exam⟧ (fees paid in both)?`],
+  o:[`attendance 0 and attendance 100, the two ends of the range`,`attendance 75 and attendance 100, the top of the pass range`,`attendance 74 and attendance 75, the values around the limit`,`attendance 50 and attendance 75, a fail and a pass value`], a:2,
+  ex:`"At least 75" changes the result between 74 (not allowed) and 75 (allowed), so those are the values to test. The other pairs skip the boundary or sit far from it.` },
+
+{ id:"n-1", src:"New practice question", type:"T", tags:["B8"],
+  q:[`Which statement best describes the difference between procedural and functional programming?`],
+  o:[`Procedural code avoids functions entirely, while functional code splits every step into a function`,`Procedural code has no side effects, while functional code shares state through global variables`,`Procedural code says how to get a result step by step, while functional code says what to compute`,`Procedural code is for stateful programs, while functional code is only for stateless programs`], a:2,
+  ex:`Procedural code is imperative: it lists the steps to follow, top to bottom. Functional code is declarative: it is built from pure functions that describe what is computed. Procedural code can still use functions, and it is functional code that avoids side effects, not the other way round.` },
+{ id:"n-2", src:"New practice question", type:"T", tags:["C15","C2"],
+  q:[`A function ⟦add_to_cart(cart, item_id, quantity)⟧ updates the cart passed to it and returns None. How should its unit test check that it worked?`],
+  o:[`Assert on the cart after the call, checking that it now holds the item with that quantity`,`Assert on the return value after the call, checking that it equals the expected cart`,`Assert on the printed output after the call, checking that it names the item added`,`Skip the assertion, since a function that returns None cannot be unit tested`], a:0,
+  ex:`⟦add_to_cart⟧ does its job by changing the cart passed to it, not by returning a value. So the test arranges a cart, calls the function, then asserts on the cart itself, for example ⟦assert cart == {101: 2}⟧. Returning None does not make a function untestable.` },
+{ id:"n-3", src:"New practice question", type:"T", tags:["C16"],
+  q:[`Why are tests usually automated instead of checked by hand?`],
+  o:[`Automated tests do not need expected outputs, so they are quicker to write than manual ones`,`Automated tests replace the specification, so the PRD no longer needs to be kept up to date`,`Automated tests only check performance, so they catch problems that manual checks cannot`,`Automated tests re-run cheaply after every change, so fewer tests get missed or skipped`], a:3,
+  ex:`Checking by hand doesn't scale: as the number of tests grows, some get missed, and every change means repeating them all. Automated tests can be re-run with one command after every change. They still need expected outputs, and those still come from the spec.` },
+{ id:"n-4", src:"New practice question", type:"T", tags:["C14"],
+  q:[`What is the difference between code coverage and test coverage?`],
+  o:[`Code coverage counts the test files written; test coverage counts the lines of code`,`Code coverage measures the code the tests run; test coverage measures the requirements they check`,`Code coverage applies only to unit tests; test coverage applies only to system tests`,`Code coverage and test coverage are two names for the same measure of thoroughness`], a:1,
+  ex:`Code coverage is about the code: how many lines or branches the tests cause to run. Test coverage is measured against the spec: how many requirements and edge cases the tests actually check. High code coverage doesn't guarantee high test coverage.` },
+{ id:"n-5", src:"New practice question", type:"H", tags:["D9","B1","D8"],
+  q:[`**Requirement:** Only users aged 18 or over get access.`, {code:`def is_adult(age: int) -> bool:
+    if age >= 18:
+        return "yes"
+    return "no"
+
+def main():
+    age = int(input("Age: "))
+    if is_adult(age):
+        print("Access granted")
+    else:
+        print("Access denied")`}, `Which test case will **fail**?`],
+  o:[`Input 25 → "Access granted"`,`Input 15 → "Access denied"`,`Input 18 → "Access granted"`,`Input 40 → "Access granted"`], a:1,
+  ex:`⟦is_adult⟧ promises a bool but returns the strings "yes" or "no". Any non-empty string counts as true in an ⟦if⟧, so ⟦main⟧ prints "Access granted" even for age 15. Inputs of 18 and over still pass, which is why this kind of bug can go unnoticed.` },
+{ id:"n-6", src:"New practice question", type:"H", tags:["D10"],
+  q:[`**Requirement:** A password is valid if it is at least 8 characters long and contains no spaces.`, {code:`def valid_password(pwd: str) -> bool:
+    if len(pwd) < 8:
+        return False
+    if " " not in pwd:
+        return False
+    return True`}, `Which change fixes the bug?`],
+  o:[`Change ⟦len(pwd) < 8⟧ to ⟦len(pwd) <= 8⟧`,`Change the final ⟦return True⟧ to ⟦return False⟧`,`Change the first ⟦return False⟧ to ⟦return True⟧`,`Change ⟦" " not in pwd⟧ to ⟦" " in pwd⟧`], a:3,
+  ex:`The second check rejects passwords that contain no spaces, which is the opposite of the requirement. It should reject a password when ⟦" " in pwd⟧. The length check is already right: anything under 8 characters is rejected, and exactly 8 is allowed.` },
+{ id:"n-7", src:"New practice question", type:"H", tags:["D11","D8"],
+  q:[`**Requirement:** Return how many times ⟦target⟧ appears in ⟦items⟧.`, {code:`def count_occurrences(items: list[int], target: int) -> int:
+    count = 0
+    for x in items:
+        if x == target:
+            count += 1
+        return count`}, `Which test case will **fail**?`],
+  o:[`⟦count_occurrences([5], 5)⟧ → 1`,`⟦count_occurrences([3, 4], 3)⟧ → 1`,`⟦count_occurrences([5, 2, 5], 5)⟧ → 2`,`⟦count_occurrences([7, 8], 9)⟧ → 0`], a:2,
+  ex:`The ⟦return⟧ sits inside the loop, so the function exits after checking only the first item. For ⟦[5, 2, 5]⟧ it returns 1 instead of 2. The other tests pass because their correct answer happens to depend only on the first item.` }
+];
+
+const CASE = [
+{ id:"u-1", src:"Ungraded Quiz (Food Ordering) · Q1", type:"A", tags:["B3","C7"],
+  q:[`Which of these can NOT be tested on a freshly started app with a single action?`],
+  o:[`Entering item ID "abc"`,`Placing order with an empty cart`,`Adding item 101 with quantity 2`,`Deleting item 101`], a:3,
+  ex:`To check that delete removes an item (FR 3), item 101 has to be in the cart first, which needs an earlier action. The other three can each be the very first action: a triggers EC 1, b triggers EC 5, and c adds the item.` },
+{ id:"u-2", src:"Ungraded Quiz (Food Ordering) · Q2", type:"A", tags:["A6"],
+  q:[`**Start:** empty cart.\n**Actions:** Add 101 (qty 2), then Add 101 (qty 3).`, `What should the cart show? (101 - Classic Burger is Rs 180.)`],
+  o:[`Classic Burger x3, Rs. 540`,`Classic Burger x5, Rs. 900`,`Classic Burger x2, Rs. 360 and Classic Burger x3 Rs. 540`,`Prints a message "This item is already in the cart."`], a:1,
+  ex:`FR 2: adding an item that is already in the cart adds to its quantity. 2 + 3 = 5 burgers, and 5 × ₹180 = ₹900.` },
+{ id:"u-3", src:"Ungraded Quiz (Food Ordering) · Q3", type:"A", tags:["A6"],
+  q:[`Cart has Classic Burger x5. The customer deletes item 101 (Classic Burger). What is the expected result?`],
+  o:[`Classic Burger x4, Rs. 720`,`Classic Burger x1, Rs. 180`,`Cart is empty, Rs. 0`,`Prints a message "Invalid quantity."`], a:2,
+  ex:`FR 3: deleting an item removes it entirely, all of its quantity at once. The burgers were the only item, so the cart becomes empty at ₹0.` },
+{ id:"u-4", src:"Ungraded Quiz (Food Ordering) · Q4", type:"H", tags:["C6"],
+  q:[`Which is the ***BEST*** test to check the rule that adding the same item twice adds up the quantity?`],
+  o:[`Add 101 (qty 5), then check that Cart has Classic Burger x5`,`Add 101 (qty 4) then Add 101 (qty 4), then check that Cart has Classic Burger x8`,`Add 101 (qty 4) then Add 101 (qty 4), then check that Cart has Classic Burger x0`,`Add 101 (qty 2), then Delete 101; check the Cart is empty`], a:1,
+  ex:`Only b adds the same item twice and checks that the quantities were summed (4 + 4 = 8). Option a adds once, c expects the wrong result, and d tests delete instead.` },
+{ id:"u-5", src:"Ungraded Quiz (Food Ordering) · Q5", type:"A", tags:["C7","A6"],
+  q:[`A test is: Add 101 (qty 2), then Delete 101. If you swap the order [Delete 101 first, then Add 101 (qty 2)] what happens?`],
+  o:[`Prints a message "That item is not in your cart." and then adds Classic Burger x2 to the Cart.`,`Nothing changes, because the order of actions does not matter.`,`The app crashes.`,`Both versions end with an empty cart.`], a:0,
+  ex:`Deleting 101 from an empty cart triggers EC 4, which prints the message and leaves the cart unchanged. The add then works normally, leaving Classic Burger x2. Order matters in a stateful app.` },
+{ id:"u-6", src:"Ungraded Quiz (Food Ordering) · Q6", type:"A", tags:["C5","C8"],
+  q:[`Which input tests EC 1: "the item ID is not a number"?`],
+  o:[`Item ID: 199.56`,`Item ID: 199`,`Item ID: abcd`,`More than one option is correct`], a:2,
+  ex:`"abcd" is not a number at all, which is exactly EC 1. 199 is a number that isn't on the menu, so it tests EC 2 instead. 199.56 is still a number, just not a whole one.` },
+{ id:"u-7", src:"Ungraded Quiz (Food Ordering) · Q7", type:"A", tags:["A6"],
+  q:[`**Start:** empty cart.\n**Actions:** Add 103 (qty 2), then Add 105 (qty 1), then Delete 103.`, `What does the cart show? (103 - French Fries Rs. 120, 105 - Chocolate Brownie Rs. 150)`],
+  o:[`Chocolate Brownie x1, Rs. 150`,`Chocolate Brownie x2, Rs. 300`,`French Fries x2, Rs. 240`,`None of the options`], a:0,
+  ex:`Deleting 103 removes both portions of French Fries at once (FR 3), leaving only the brownie: 1 × ₹150.` },
+{ id:"u-9", src:"Ungraded Quiz (Food Ordering) · Q9", type:"H", tags:["C6"],
+  q:[`Which test would best reveal a bug where "Delete" wrongly removes only *one unit* of an item instead of the whole line?`],
+  o:[`Add 101 (qty 3), then Delete 101; check the cart is empty`,`Add 101 (qty 1), then Delete 101; check the cart is empty`,`Delete 101 on an empty cart; check for an error`], a:0,
+  ex:`With 3 burgers, a delete that removes only one unit would leave 2 behind, so the "cart is empty" check fails and exposes the bug. With only 1 burger (option b), the correct and buggy code both empty the cart, so the bug stays hidden.` },
+{ id:"u-10", src:"Ungraded Quiz (Food Ordering) · Q10", type:"A", tags:["B2"],
+  q:[`Two groups design the ordering app.\nGroup 1 stores the cart as a dictionary ⟦{item_id: quantity}⟧.\nGroup 2 stores it as a list of ⟦(item_id, quantity)⟧ pairs.\nWhich statement is true?`],
+  o:[`Both are valid representations`,`Only the dict is a valid representation`,`Both of the representations may not work`], a:0,
+  ex:`Both can hold the same information and keep items in the order they were added. A dict makes looking up and updating a quantity simpler, but a list of pairs works too if the code searches through it.` }
+];
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function inline(s) {
+  const parts = String(s).split(/⟦([\s\S]*?)⟧/);
+  return parts.map((p, i) => {
+    if (i % 2) return `<code class="i">${esc(p)}</code>`;
+    let h = esc(p);
+    h = h.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
+    h = h.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    h = h.replace(/(^|[\s(\[])\*([^\s*](?:[^*]*?[^\s*])?)\*(?=[\s.,;:!?)\]]|$)/g, "$1<em>$2</em>");
+    return h.replace(/\n/g, "<br>");
+  }).join("");
+}
+const KW = /^(def|return|if|elif|else|for|in|not|and|or|global|None|True|False|import|from|assert|is)$/;
+function highlight(code) {
+  const re = /("""[\s\S]*?"""|"[^"\n]*"|'[^'\n]*'|#[^\n]*|\b[A-Za-z_]\w*\b|\b\d+(?:\.\d+)?\b)/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(code))) {
+    out += esc(code.slice(last, m.index));
+    const t = m[0];
+    if (t.startsWith('"') || t.startsWith("'")) out += `<span class="st">${esc(t)}</span>`;
+    else if (t.startsWith("#")) out += `<span class="cm">${esc(t)}</span>`;
+    else if (/^\d/.test(t)) out += `<span class="nu">${esc(t)}</span>`;
+    else if (KW.test(t)) out += `<span class="kw">${esc(t)}</span>`;
+    else out += esc(t);
+    last = m.index + t.length;
+  }
+  return out + esc(code.slice(last));
+}
+const block = part => typeof part === "string" ? `<p>${inline(part)}</p>` : `<pre><code>${highlight(part.code)}</code></pre>`;
+const areaOf = tag => tag[0];
+
+/* ---------- storage ---------- */
+const KEY = "pdd-qbank-v1";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+function stateOf(q) { const r = store[q.id]; if (!r || typeof r.c !== "number") return "none"; return r.c === q.a ? "pass" : "fail"; }
+
+/* ---------- cards ---------- */
+const ALL = {};
+[...PRACTICE, ...CASE].forEach(q => ALL[q.id] = q);
+PRACTICE.forEach((q, i) => q.n = i + 1);
+CASE.forEach((q, i) => q.n = i + 1);
+
+function cardHTML(q) {
+  const tagChips = q.tags.map(t => { const a = AREAS[areaOf(t)]; return `<span class="ctag" style="--c:var(${a.c});--cs:var(${a.cs})"><code>${t}</code>${esc(CONCEPTS[t])}</span>`; }).join("");
+  const csTags = q.tags.filter(t => COURSE_SPECIFIC[t]);
+  const csNote = csTags.length ? `<div class="csnote"><h4>Course-specific</h4><p>${csTags.map(t => esc(COURSE_SPECIFIC[t])).join(" ")}</p></div>` : "";
+  const opts = q.o.map((o, i) => `<button class="opt" type="button" data-i="${i}"><span class="letter">${"abcd"[i]}</span><span class="body">${typeof o === "string" ? `<span>${inline(o)}</span>` : block(o)}</span><span class="mark"></span></button>`).join("");
+  return `<article class="card" id="q-${q.id}" data-id="${q.id}">
+    <header class="card-head">
+      <span class="qnum">Q${q.n}</span>
+      <span class="tpill" data-t="${q.type}">${TYPES[q.type]}</span>
+      <div class="info">
+        <button class="info-btn${csTags.length ? " flag" : ""}" type="button" aria-label="Question details${csTags.length ? " (includes a course-specific concept)" : ""}" aria-expanded="false">i</button>
+        <div class="pop" role="tooltip">
+          <div><h4>Concepts tested</h4><div class="ctags">${tagChips}</div></div>
+          ${csNote}
+          <div><h4>Question type</h4><p>${TYPES[q.type]}</p></div>
+          <div><h4>Source</h4><p>${esc(q.src)}</p></div>
+        </div>
+      </div>
+      <span class="status"></span>
+    </header>
+    <div class="prompt">${q.q.map(block).join("")}</div>
+    <div class="opts" role="group" aria-label="Options">${opts}</div>
+    <div class="result" hidden>
+      <p class="verdict"></p>
+      <p class="expl">${inline(q.ex)}</p>
+      <div class="result-foot"><button class="btn-ghost retry" type="button">Try again</button></div>
+    </div>
+  </article>`;
+}
+
+function paintCard(el) {
+  const q = ALL[el.dataset.id], s = stateOf(q), r = store[q.id];
+  el.dataset.s = s;
+  const st = el.querySelector(".status");
+  st.dataset.s = s; st.textContent = s === "pass" ? "PASSED" : s === "fail" ? "FAILED" : "";
+  const res = el.querySelector(".result");
+  el.querySelectorAll(".opt").forEach(b => {
+    const i = +b.dataset.i;
+    b.classList.remove("correct", "wrong", "faded");
+    b.querySelector(".mark").textContent = "";
+    b.disabled = s !== "none";
+    b.removeAttribute("aria-pressed");
+    if (s !== "none") {
+      if (i === q.a) { b.classList.add("correct"); b.querySelector(".mark").textContent = "ANSWER"; }
+      else if (i === r.c) { b.classList.add("wrong"); b.querySelector(".mark").textContent = "YOUR PICK"; }
+      else b.classList.add("faded");
+      if (i === r.c) b.setAttribute("aria-pressed", "true");
+    }
+  });
+  res.hidden = s === "none";
+  if (s !== "none") {
+    const v = res.querySelector(".verdict");
+    v.dataset.s = s;
+    v.textContent = s === "pass" ? "Correct." : `Not quite. The answer is ${"abcd"[q.a]}.`;
+  }
+}
+
+/* ---------- run strips ---------- */
+function renderRun(where, set, visibleIds) {
+  const box = document.getElementById(where);
+  const pass = set.filter(q => stateOf(q) === "pass").length, fail = set.filter(q => stateOf(q) === "fail").length;
+  const dots = set.map(q => `<button class="dot${visibleIds && !visibleIds.has(q.id) ? " dim" : ""}" type="button" data-s="${stateOf(q)}" data-go="${q.id}" aria-label="Go to Q${q.n}" title="Q${q.n}"></button>`).join("");
+  box.innerHTML = `<div class="run-row"><span class="run-summary">${set.length} questions · <b class="p">${pass} passed</b> · <b class="f">${fail} failed</b> · ${set.length - pass - fail} not tried</span><button class="btn-ghost reset" type="button" data-set="${where}">Reset progress</button></div><div class="dots">${dots}</div>`;
+}
+
+/* ---------- filters ---------- */
+const F = { areas: new Set(), concept: "", type: "", status: "" };
+function buildFilters() {
+  const ac = document.getElementById("f-area");
+  ac.innerHTML = Object.entries(AREAS).map(([k, a]) => `<button class="chip" type="button" aria-pressed="false" data-area="${k}" style="--c:var(${a.c});--cs:var(${a.cs})"><span class="sw"></span>${esc(a.name)}</button>`).join("");
+  document.getElementById("f-type").innerHTML = [["", "All"], ["T", "Theory"], ["A", "Application"], ["H", "Higher-Order"]].map(([k, l]) => `<button class="chip" type="button" data-type="${k}" aria-pressed="${k === "" ? "true" : "false"}">${l}</button>`).join("");
+  document.getElementById("f-status").innerHTML = [["", "All"], ["none", "Not tried"], ["fail", "Got wrong"]].map(([k, l]) => `<button class="chip" type="button" data-status="${k}" aria-pressed="${k === "" ? "true" : "false"}">${l}</button>`).join("");
+  fillConcepts();
+}
+function fillConcepts() {
+  const sel = document.getElementById("f-concept");
+  const used = new Set(); PRACTICE.forEach(q => q.tags.forEach(t => used.add(t)));
+  const order = Object.keys(CONCEPTS).filter(t => used.has(t) && (F.areas.size === 0 || F.areas.has(areaOf(t))));
+  if (F.concept && !order.includes(F.concept)) F.concept = "";
+  let html = `<option value="">All concepts</option>`;
+  Object.entries(AREAS).forEach(([k, a]) => {
+    const items = order.filter(t => areaOf(t) === k);
+    if (!items.length) return;
+    html += `<optgroup label="${esc(a.name)}">` + items.map(t => { const c = PRACTICE.filter(q => q.tags.includes(t)).length; return `<option value="${t}"${t === F.concept ? " selected" : ""}>${t} · ${esc(CONCEPTS[t])} (${c})</option>`; }).join("") + `</optgroup>`;
+  });
+  sel.innerHTML = html;
+}
+function matches(q) {
+  if (F.areas.size && !q.tags.some(t => F.areas.has(areaOf(t)))) return false;
+  if (F.concept && !q.tags.includes(F.concept)) return false;
+  if (F.type && q.type !== F.type) return false;
+  if (F.status && stateOf(q) !== F.status) return false;
+  return true;
+}
+function applyFilters() {
+  const vis = new Set();
+  document.querySelectorAll("#list-practice .card").forEach(el => { const ok = matches(ALL[el.dataset.id]); el.hidden = !ok; if (ok) vis.add(el.dataset.id); });
+  let empty = document.getElementById("empty-practice");
+  if (!vis.size) {
+    if (!empty) { empty = document.createElement("div"); empty.id = "empty-practice"; empty.className = "empty"; empty.textContent = "No questions match these filters. Clear a filter to see more."; document.getElementById("list-practice").appendChild(empty); }
+  } else if (empty) empty.remove();
+  const filtered = F.areas.size || F.concept || F.type || F.status;
+  document.getElementById("showing").textContent = `Showing ${vis.size} of ${PRACTICE.length}`;
+  document.getElementById("f-clear").hidden = !filtered;
+  renderRun("run-practice", PRACTICE, filtered ? vis : null);
+  try { localStorage.setItem(KEY + "-filters", JSON.stringify({ areas: [...F.areas], concept: F.concept, type: F.type, status: F.status })); } catch (e) {}
+}
+function syncChipStates() {
+  document.querySelectorAll("#f-area .chip").forEach(b => b.setAttribute("aria-pressed", F.areas.has(b.dataset.area)));
+  document.querySelectorAll("#f-type .chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.type === F.type));
+  document.querySelectorAll("#f-status .chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.status === F.status));
+}
+
+/* ---------- tabs ---------- */
+function showTab(which) {
+  if (!["practice", "case", "guide"].includes(which)) which = "practice";
+  ["practice", "case", "guide"].forEach(k => {
+    const on = k === which;
+    document.getElementById("tab-" + k).setAttribute("aria-selected", on);
+    const p = document.getElementById("panel-" + k); p.hidden = !on; p.style.display = on ? "grid" : "";
+  });
+  try { localStorage.setItem(KEY + "-tab", which); } catch (e) {}
+}
+function renderGuide() {
+  const all = [...PRACTICE, ...CASE];
+  document.getElementById("g-types").innerHTML = Object.entries(TYPES).map(([k, n]) => {
+    const c = all.filter(q => q.type === k).length;
+    return `<div class="tcard"><div class="row"><span class="tpill" data-t="${k}">${n}</span><span class="cnt">${c} questions</span></div><p>${esc(TYPE_INFO[k].d)}</p><p class="eg">${esc(TYPE_INFO[k].eg)}</p></div>`;
+  }).join("");
+  const used = new Set(); all.forEach(q => q.tags.forEach(t => used.add(t)));
+  document.getElementById("g-areas").innerHTML = Object.entries(AREAS).map(([k, a]) => {
+    const ids = Object.keys(CONCEPTS).filter(t => areaOf(t) === k && used.has(t));
+    const total = all.filter(q => q.tags.some(t => areaOf(t) === k)).length;
+    const rows = ids.map(t => {
+      const np = PRACTICE.filter(q => q.tags.includes(t)).length, nc = CASE.filter(q => q.tags.includes(t)).length;
+      const where = [np ? `${np} practice` : "", nc ? `${nc} case study` : ""].filter(Boolean).join(" · ");
+      const btn = np ? `<button class="go" type="button" data-concept="${t}">Practise →</button>` : `<button class="go" type="button" data-goto="case">Case study →</button>`;
+      return `<div class="crow"><code>${t}</code><div><span class="nm">${esc(CONCEPTS[t])}</span>${COURSE_SPECIFIC[t] ? ` <span class="cs-badge">Course-specific</span>` : ""}<p class="ds">${esc(DESC[t])}</p><span class="cnt">${where}</span></div>${btn}</div>`;
+    }).join("");
+    return `<section class="acard" style="--c:var(${a.c});--cs:var(${a.cs})"><h4>${esc(a.name)}<span class="cnt">${total} questions</span></h4>${rows}</section>`;
+  }).join("");
+}
+
+/* ---------- init ---------- */
+document.getElementById("list-practice").innerHTML = PRACTICE.map(cardHTML).join("");
+document.getElementById("list-case").innerHTML = CASE.map(cardHTML).join("");
+document.getElementById("n-practice").textContent = PRACTICE.length;
+document.getElementById("n-case").textContent = CASE.length;
+document.querySelectorAll(".card").forEach(paintCard);
+try { const sf = JSON.parse(localStorage.getItem(KEY + "-filters") || "null"); if (sf) { F.areas = new Set(sf.areas || []); F.concept = sf.concept || ""; F.type = sf.type || ""; F.status = sf.status || ""; } } catch (e) {}
+buildFilters(); syncChipStates(); fillConcepts(); applyFilters();
+renderRun("run-case", CASE, null);
+let startTab = "practice";
+try { startTab = localStorage.getItem(KEY + "-tab") || "practice"; } catch (e) {}
+if (location.hash === "#case-study") startTab = "case"; else if (location.hash === "#practice") startTab = "practice"; else if (location.hash === "#guide") startTab = "guide";
+renderGuide();
+showTab(startTab);
+
+function refreshAfterAnswer(el) {
+  paintCard(el);
+  if (el.closest("#list-case")) renderRun("run-case", CASE, null); else applyFilters();
+}
+
+document.addEventListener("click", e => {
+  const t = e.target;
+  const opt = t.closest(".opt");
+  if (opt && !opt.disabled) {
+    const card = opt.closest(".card");
+    store[card.dataset.id] = { c: +opt.dataset.i };
+    save();
+    const keepHidden = card.hidden;
+    refreshAfterAnswer(card);
+    if (!keepHidden && card.hidden) card.hidden = false; // keep the just-answered card visible under "Not tried"
+    return;
+  }
+  const retry = t.closest(".retry");
+  if (retry) { const card = retry.closest(".card"); delete store[card.dataset.id]; save(); refreshAfterAnswer(card); card.hidden = false; card.querySelector(".opt").focus(); return; }
+
+  const ib = t.closest(".info-btn");
+  document.querySelectorAll(".info.open").forEach(x => { if (!ib || x !== ib.parentElement) { x.classList.remove("open"); x.querySelector(".info-btn").setAttribute("aria-expanded", "false"); } });
+  if (ib) { const box = ib.parentElement; const open = box.classList.toggle("open"); ib.setAttribute("aria-expanded", open); return; }
+
+  const dot = t.closest(".dot");
+  if (dot) { const el = document.getElementById("q-" + dot.dataset.go); if (el) { if (el.hidden) { F.areas.clear(); F.concept = ""; F.type = ""; F.status = ""; syncChipStates(); fillConcepts(); applyFilters(); } el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); } return; }
+
+  const rs = t.closest(".reset");
+  if (rs) {
+    if (!rs.classList.contains("armed")) { rs.classList.add("armed"); rs.textContent = "Click again to reset"; setTimeout(() => { if (document.body.contains(rs)) { rs.classList.remove("armed"); rs.textContent = "Reset progress"; } }, 3000); return; }
+    const set = rs.dataset.set === "run-case" ? CASE : PRACTICE;
+    set.forEach(q => delete store[q.id]); save();
+    document.querySelectorAll(rs.dataset.set === "run-case" ? "#list-case .card" : "#list-practice .card").forEach(paintCard);
+    if (set === CASE) renderRun("run-case", CASE, null); else applyFilters();
+    return;
+  }
+
+  const ac = t.closest("#f-area .chip");
+  if (ac) { const k = ac.dataset.area; F.areas.has(k) ? F.areas.delete(k) : F.areas.add(k); syncChipStates(); fillConcepts(); applyFilters(); return; }
+  const tc = t.closest("#f-type .chip");
+  if (tc) { F.type = tc.dataset.type; syncChipStates(); applyFilters(); return; }
+  const sc = t.closest("#f-status .chip");
+  if (sc) { F.status = sc.dataset.status; syncChipStates(); applyFilters(); return; }
+  if (t.closest("#f-clear")) { F.areas.clear(); F.concept = ""; F.type = ""; F.status = ""; syncChipStates(); fillConcepts(); applyFilters(); return; }
+  const tb = t.closest(".tab");
+  if (tb) { showTab(tb.dataset.tab); return; }
+  const gt = t.closest("[data-goto]");
+  if (gt) { showTab(gt.dataset.goto); document.querySelector(".tabs").scrollIntoView({ block: "start" }); return; }
+  const gc = t.closest(".go[data-concept]");
+  if (gc) { F.areas.clear(); F.type = ""; F.status = ""; F.concept = gc.dataset.concept; syncChipStates(); fillConcepts(); applyFilters(); showTab("practice"); document.querySelector(".tabs").scrollIntoView({ block: "start" }); return; }
+});
+document.getElementById("f-concept").addEventListener("change", e => { F.concept = e.target.value; applyFilters(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".info.open").forEach(x => { x.classList.remove("open"); x.querySelector(".info-btn").setAttribute("aria-expanded", "false"); }); });
+</script>
+
+</body></html>
